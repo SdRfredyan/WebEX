@@ -21,6 +21,7 @@ Pour utiliser `UNION`, nous devons connaître le nombre exact de colonnes utilis
 * **Conclusion :** La requête utilise **2 colonnes**.
 * **Preuves visuelles :** * `screenshots/1_order_by_check.png`
   * `screenshots/2_order_by_check.png`
+![colonnes](screenshot/2_order_by_check.png)
 
 ### Étape 2 : Proof of Concept (PoC)
 Nous vérifions que nous pouvons injecter des données arbitraires. Nous utilisons un ID inexistant (`-1`) pour vider l'affichage normal et afficher nos chiffres (`1` et `2`).
