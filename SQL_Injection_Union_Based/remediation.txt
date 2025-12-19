@@ -1,0 +1,30 @@
+---
+
+### 2. Fichier `remediation.txt`
+*(Créez ce fichier dans le même dossier pour expliquer la correction)*
+
+```text
+SUJET : Remédiation de l'Injection SQL (Union Based)
+
+1. PROBLÈME IDENTIFIÉ
+Le script PHP concatène directement l'entrée utilisateur (paramètre "id" ou recherche) dans la requête SQL sans validation ni échappement suffisant.
+Code vulnérable probable :
+$sql = "SELECT title, url FROM list_images WHERE id = " . $_GET['id'];
+
+Bien que le serveur semble filtrer les apostrophes simple ('), cela n'empêche pas l'injection car le paramètre attendu est un entier. L'attaquant peut injecter du SQL valide sans utiliser de guillemets (ou en utilisant de l'hexadécimal).
+
+2. SOLUTION RECOMMANDÉE : REQUÊTES PRÉPARÉES (PDO)
+La seule méthode robuste pour empêcher toute injection SQL est l'utilisation de requêtes préparées. Cela sépare le code SQL des données.
+
+Exemple de code sécurisé (PHP) :
+
+$stmt = $pdo->prepare("SELECT title, url FROM list_images WHERE id = :id");
+$stmt->execute(['id' => $_GET['id']]);
+$results = $stmt->fetchAll();
+
+3. SOLUTION SECONDAIRE : CASTING (TYPAGE)
+Puisque le champ attendu est un nombre, forcer le type de la variable en entier (Integer) neutralise l'attaque immédiatement, car tout code SQL injecté sera converti en 0 ou supprimé.
+
+Exemple :
+$id = (int)$_GET['id'];
+// $id vaut maintenant un nombre pur, l'injection est impossible.
