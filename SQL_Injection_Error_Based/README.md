@@ -71,6 +71,13 @@ Une concaténation contrôlée de colonnes applicatives permet d’afficher dire
 * **Résultat :** `~Flag:GetThe:42~`
 * **Preuve visuelle :** `screenshots/Plaintext_Flag_GetThe_42.png`
 ![Plaintext Flag](screenshots/7_plaintext_flag.png)
+
+### Étape 8 : Génération du flag final à partir du plaintext
+Le plaintext obtenu à l’étape précédente est : `Flag:GetThe:42`
+L’indice applicatif extrait depuis la colonne `Commentaire` indiquait explicitement de convertir le plaintext en minuscules puis d’appliquer un hash SHA-256 sur l’ensemble de la chaîne.
+#### Transformation appliquée
+1. Conversion du plaintext en minuscules :`flag:getthe:42`
+2. Calcul du hash SHA-256 :`659b3665adef36100046ae1b9b51845cd456e93903343721f45e455c0d8311d6`
   
 ## 3. Conclusion
 L’exploitation de la SQL Injection error-based sur la page `MEMBERS` a permis l’énumération complète de la base de données, l’extraction d’un hash MD5 sensible, l’analyse d’un indice applicatif stocké en base et la reconstitution du plaintext final.  
