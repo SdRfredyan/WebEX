@@ -1,0 +1,7 @@
+Correction suggérée : Pour empêcher cette injection SQL, il faut utiliser des requêtes préparées (Prepared Statements). Au lieu d'insérer directement la variable de l'utilisateur dans la requête SQL, on utilise des paramètres liés.
+
+Exemple de code sécurisé (PHP PDO) :
+$stmt = $pdo->prepare('SELECT * FROM users WHERE user_id = :id');
+$stmt->execute(['id' => $_GET['id']]);
+$user = $stmt->fetch();
+Cela empêche les caractères comme ' d'être interprétés comme du code SQL.
