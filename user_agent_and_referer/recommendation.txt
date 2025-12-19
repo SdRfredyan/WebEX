@@ -1,0 +1,9 @@
+PATCH DE SÉCURITÉ : USER-AGENT & REFERER SPOOFING
+
+Problème :
+Le site utilise les en-têtes HTTP 'User-Agent' (navigateur) et 'Referer' (site de provenance) pour décider si un utilisateur a le droit d'accéder à une page. C'est une erreur de sécurité car ces informations sont envoyées par le client et peuvent être falsifiées sans aucun effort.
+
+Correction :
+1. Ne jamais utiliser les en-têtes HTTP pour gérer les accès ou l'authentification.
+2. Utiliser de vrais mécanismes d'authentification (sessions, tokens, OAuth).
+3. Si une vérification de provenance est nécessaire (ex: éviter le hotlinking d'images), savoir qu'elle est contournable et ne doit pas protéger des données sensibles.
