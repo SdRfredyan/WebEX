@@ -53,7 +53,7 @@ Nous extrayons le contenu de toutes les colonnes. Comme les apostrophes `'` sont
 `If you read this just use this md5 decode lowercase then sha256 to win this flag ! : 1928e8083cf461a51303633093573c46`
 * **Preuve visuelle :** `screenshots/7_extraction_raw.png`
 
-### Étape 3 : Décryptage du Flag Final
+## 3. Décryptage du Flag Final
 Le hash trouvé lors de l'étape précédente n'est pas le flag direct, c'est une énigme qu'il faut résoudre.
 * **Hash extrait (MD5) :** 1928e8083cf461a51303633093573c46
 * **Décryptage MD5 :** Ce hash correspond au mot albatroz.
