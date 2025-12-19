@@ -1,7 +1,48 @@
-Correction suggérée : Pour empêcher cette injection SQL, il faut utiliser des requêtes préparées (Prepared Statements). Au lieu d'insérer directement la variable de l'utilisateur dans la requête SQL, on utilise des paramètres liés.
+Remédiation
+Problème identifié
 
-Exemple de code sécurisé (PHP PDO) :
+La vulnérabilité provient de l’utilisation directe de la valeur du paramètre id dans une requête SQL, sans validation ni mécanisme de protection.
+Cela permet à un attaquant d’injecter des expressions SQL arbitraires, exploitées ici via des fonctions error-based (EXTRACTVALUE, UPDATEXML).
+
+Correction recommandée
+1. Utilisation de requêtes préparées (Prepared Statements)
+
+La mesure principale consiste à utiliser des requêtes préparées avec paramètres liés, afin d’empêcher toute interprétation du contenu utilisateur comme du code SQL.
+
+Exemple sécurisé avec PHP (PDO) :
+
 $stmt = $pdo->prepare('SELECT * FROM users WHERE user_id = :id');
 $stmt->execute(['id' => $_GET['id']]);
 $user = $stmt->fetch();
-Cela empêche les caractères comme ' d'être interprétés comme du code SQL.
+
+
+Les paramètres liés garantissent que la valeur de id est traitée comme une donnée et non comme une partie de la requête SQL, rendant l’injection impossible.
+
+2. Validation stricte des entrées utilisateur
+
+Étant donné que le paramètre id est censé être numérique, une validation stricte doit être appliquée avant toute utilisation :
+
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+
+
+Toute valeur non conforme doit être rejetée.
+
+3. Gestion sécurisée des erreurs SQL
+
+Les messages d’erreur SQL détaillés ne doivent jamais être affichés en production, car ils facilitent l’exploitation (error-based SQL injection).
+
+Désactiver l’affichage des erreurs SQL côté utilisateur
+
+Journaliser les erreurs côté serveur uniquement
+
+Conclusion de la remédiation
+
+La combinaison des mesures suivantes permet d’éliminer efficacement la vulnérabilité :
+
+requêtes préparées
+
+validation stricte des entrées
+
+suppression de l’affichage des erreurs SQL
+
+Ces bonnes pratiques empêchent toute exploitation par injection SQL et renforcent la sécurité globale de l’application.
