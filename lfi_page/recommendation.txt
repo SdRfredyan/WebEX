@@ -1,0 +1,29 @@
+PATCH DE SÉCURITÉ : LOCAL FILE INCLUSION (LFI)
+
+Problème :
+Le paramètre 'page' est utilisé directement dans une fonction d'inclusion de fichier (include/require) sans validation. Cela permet à un attaquant de parcourir l'arborescence serveur (Directory Traversal).
+
+Correction (PHP) :
+Ne jamais utiliser l'entrée utilisateur directement pour construire un chemin de fichier. Utiliser une liste blanche (Allow-list).
+
+---------------- CODE VULNÉRABLE ----------------
+$page = $_GET['page'];
+include($page); // FAILLE CRITIQUE
+
+---------------- CODE SÉCURISÉ ----------------
+$page = $_GET['page'];
+
+// Liste stricte des pages autorisées
+$allowed_pages = [
+    'signin' => 'signin.php',
+    'media'  => 'media.php',
+    'survey' => 'survey.php',
+    'member' => 'member.php'
+];
+
+if (array_key_exists($page, $allowed_pages)) {
+    include($allowed_pages[$page]);
+} else {
+    // Page par défaut ou erreur 404
+    include('home.php');
+}
